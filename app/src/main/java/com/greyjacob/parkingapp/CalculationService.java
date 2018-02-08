@@ -31,7 +31,6 @@ public class CalculationService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "Service Started..", Toast.LENGTH_LONG).show();
         final int secondCurrent = currentTime.get(Calendar.SECOND);
         long syncFirst = currentTime.get(Calendar.MILLISECOND);
         int waitTime = 60 - secondCurrent;
@@ -66,7 +65,6 @@ public class CalculationService extends Service{
             Log.d(TAG, "MyRunnable destroy edildi");
         }
         Log.d(TAG, "Service yok edildi");
-        Toast.makeText(this, "Service Destroyed..", Toast.LENGTH_LONG).show();
         super.onDestroy();
     }
 

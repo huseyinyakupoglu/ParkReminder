@@ -32,8 +32,10 @@
         </activity>
 
         <activity android:name=".Calculation"
-            android:launchMode="singleTask"
-            android:label="Calculation">
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:label="RemainTimeList">
         </activity>
         <service
             android:name=".CalculationService"

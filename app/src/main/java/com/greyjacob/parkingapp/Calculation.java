@@ -187,7 +187,6 @@ public class Calculation extends AppCompatActivity {
             float tariffPeriodic = tariff * periodCount;
             //newtime i perioda set ettik ve yeni row u list view a ekledik
             populateListView(String.valueOf(periodCount), finishTime, period, String.format("%.2f", tariffPeriodic), creationTime, period);
-//            notificationEndPark();
         }
     }
 
@@ -247,6 +246,9 @@ public class Calculation extends AppCompatActivity {
     }
     // Stop Broadcast Receiver
     public void stopServiceAndRegister(){
+//        Intent myIntent2 = new Intent(this, AlarmNotificationReceiver.class);
+//        myIntent2.putExtra("clearNotification", "ok");
+//        sendBroadcast(myIntent2);
         Intent myIntent = new Intent(this, CalculationService.class);
         if(broadcastReceiver!=null) {
             this.unregisterReceiver(broadcastReceiver);
