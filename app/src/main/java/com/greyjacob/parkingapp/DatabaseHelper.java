@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import static android.R.attr.id;
-import static android.os.Build.ID;
 
 /**
  * Created by hyakupoglu on 27-6-2017.

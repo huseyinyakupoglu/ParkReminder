@@ -5,18 +5,14 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import java.util.Calendar;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import static com.greyjacob.parkingapp.R.id.et2;
-//import static com.greyjacob.parkingapp.R.id.et3;
 
 
 /**
@@ -50,23 +46,16 @@ public class SetTime extends DialogFragment implements TimePickerDialog.OnTimeSe
         int minuteCurrent = c2.get(Calendar.MINUTE);
 
         if (setTime > hourCurrent * 60 + minuteCurrent) {
-//            Toast.makeText(getAppi, "Start time cannot be later than now", Toast.LENGTH_SHORT).show();
         } else {
 
             if (hourOfDay > 11) {
                 aMpM = "PM";
             }
 
-//            if (title == 2131427432) {
-//                TextView tv = (TextView) getActivity().findViewById(et3);
-//                //Display the user changed time on TextView
-//                tv.setText(zeroAdd(hourOfDay) + ":" + zeroAdd(minute) + aMpM + "\n");
-//
-//            } else {
-                TextView tv = (TextView) getActivity().findViewById(et2);
-                //Display the user changed time on TextView
+            TextView tv;
+            tv = getActivity().findViewById(et2);
+            //Display the user changed time on TextView
                 tv.setText(zeroAdd(hourOfDay) + ":" + zeroAdd(minute) + aMpM);
-//            }
         }
     }
     public String zeroAdd(int i){

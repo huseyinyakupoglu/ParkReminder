@@ -111,36 +111,17 @@ public class ParkInformation extends AppCompatActivity {
                             intent.putExtra("tariff", tariff.getText().toString());
                             intent.putExtra("entry", enT);
                             startActivity(intent);
-
-//                            Intent intent1 = new Intent(ParkInformation.this, AlarmNotificationReceiver.class);
-//                            intent1.putExtra("tariff", tariff.getText().toString());
-//                            sendBroadcast(intent1);
-
-
-//                            startAlarm();
                         }
                     }
                 }
         );
     }
 
-//    private void startAlarm() {
-//        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-//        Intent intent = new Intent(this, Calculation.class);
-//        PendingIntent alarmIntent = PendingIntent.getBroadcast(this,0,intent,0);
-//
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,SystemClock.elapsedRealtime());
-//    }
-
 
     public void onEntrySet(View v){
         showTime(v);
     }
 
-//    public void onExitSet(View v){
-//        showTime(v);
-//    }
-/// Bunu KEsin anlayama calis iyice
     public void showTime (View v){
         int timePickerInput = v.getId();
         Log.e(TAG,String.valueOf(timePickerInput));
@@ -151,10 +132,4 @@ public class ParkInformation extends AppCompatActivity {
         newFragment.setArguments(args);
         newFragment.show(getFragmentManager(),"TimePicker");
     }
-
-//    public void clearTextView(TextView name, TextView period, TextView tariff){
-//        name.setText("");
-//        period.setText("");
-//        tariff.setText("");
-//    }
 }

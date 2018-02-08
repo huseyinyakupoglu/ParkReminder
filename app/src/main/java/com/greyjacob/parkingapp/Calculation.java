@@ -1,8 +1,6 @@
 package com.greyjacob.parkingapp;
 
-import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -10,9 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,14 +39,10 @@ public class Calculation extends AppCompatActivity {
     long onResumeTime;
     int onResumeMinute, onStopMinute;
     boolean isFirstResume = true;
-    int passedPeriod = 0;
     static boolean isActive = false;
     private static  final int uniqueID = 178265;
     NotificationManager nm;
     public static final String MYFILTER = "com.my.broadcast.RECEIVER";
-    public static final String PREFS_NAME = "config";
-    public static final String KEY_COUNT = "notificationCount";
-    public static final String TARIFF_VALUE = "tariffValue";
     public static final String MSG = "_message";
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -101,7 +93,6 @@ public class Calculation extends AppCompatActivity {
         int hourCurrent = currentTime.get(Calendar.HOUR_OF_DAY);
         int minuteCurrent = currentTime.get(Calendar.MINUTE);
         double secondCurrent = currentTime.get(Calendar.SECOND);
-        long syncFirst = currentTime.get(Calendar.MILLISECOND);
         Double waitTime = 60 - secondCurrent; //bunlara gerek yok service de hallediliyor
         int wait = waitTime.intValue(); //bunu yolla
         Log.d(TAG, "waitTime: " + wait);
@@ -109,7 +100,6 @@ public class Calculation extends AppCompatActivity {
         int currentTimeMinuteInteger = hourCurrent*60 +minuteCurrent;
 
         int passedTime = currentTimeMinuteInteger - parkingTimeInMinute;
-        int finishedPeriods = passedTime / period;
         int remainTime = period - passedTime%period;
         Log.d(TAG, "remainTime: " + remainTime);
 
@@ -134,7 +124,6 @@ public class Calculation extends AppCompatActivity {
     @Override
     protected void onResume(){
         onResumeTime = Calendar.getInstance().getTimeInMillis();
-//        onResumeMinute = Calendar.getInstance().get(Calendar.MINUTE);
         onResumeMinute = timeInMinute();
         Log.d(DEBUG, "Resume in Minute: " + onResumeMinute);
         Log.d(TAG,"OnResume: Resume Zamani Milisaniye:" + onResumeTime);
@@ -156,7 +145,6 @@ public class Calculation extends AppCompatActivity {
     @Override
     protected void onStop(){
         remainTimeToPeriod = getRemainMinute();
-//        onStopMinute = Calendar.getInstance().get(Calendar.MINUTE);
         onStopMinute = timeInMinute();
         Log.d(DEBUG,"OnStop Minute:" + onStopMinute);
         isFirstResume = false;
@@ -167,7 +155,6 @@ public class Calculation extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.d(ALARM,"Alarm yokedildi");
-//        removeSharedPreferences();
         cancelAlarm();
         super.onDestroy();
         isActive = false;
@@ -378,36 +365,16 @@ public class Calculation extends AppCompatActivity {
         int remainMiliSecPeriod= calendar.get(Calendar.MILLISECOND);
         int waitTime = (remainMinPeriod*60*1000) - (remainSecondPeriod*1000 + remainMiliSecPeriod);
         Log.d(ALARM, "wait time: " + waitTime);
-
-
-//        SharedPreferences values = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-//        SharedPreferences.Editor editor = values.edit();
-//        editor.putInt(KEY_COUNT, periodCount);
-//        editor.putFloat(TARIFF_VALUE, tariff);
-//        editor.apply();
-
-        Intent intentHuseyin = new Intent(this, AlarmNotificationReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(this,0,intentHuseyin,0);
+        Intent intent = new Intent(this, AlarmNotificationReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+waitTime,period*60*1000, alarmIntent);
         Log.d(ALARM, "alarm set edildi");
-
     }
-
 
     public void cancelAlarm(){
        alarmManager.cancel(alarmIntent);
     }
-
-//    public void removeSharedPreferences(){
-//        SharedPreferences preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.clear();
-//        editor.apply();
-//        int currentCount = preferences.getInt(KEY_COUNT, 0);  //Sets to zero if not in prefs yet
-//        Log.d(ALARM, "Prefdeki Count degeri: " + currentCount);
-//    }
-
 
     public int timeInMinute (){
         Calendar calendar = Calendar.getInstance();

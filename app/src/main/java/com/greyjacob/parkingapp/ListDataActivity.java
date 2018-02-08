@@ -12,9 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.Calendar;
 
 
 /**
@@ -132,10 +129,6 @@ public class ListDataActivity extends AppCompatActivity {
         });
     }
     //ListView a tiklandiginda Dialog acilcak bitti
-
-    private void toastMessage(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
 
 
 

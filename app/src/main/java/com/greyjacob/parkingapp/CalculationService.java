@@ -20,7 +20,6 @@ public class CalculationService extends Service{
     Handler handler, myHandler;
     Runnable myRunnable, runnable;
     public Calendar currentTime;
-    boolean isResume = false;
     int i=0;
     PowerManager.WakeLock wakeLock;
     @Override
