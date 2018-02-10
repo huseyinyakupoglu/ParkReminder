@@ -57,18 +57,19 @@ public class ListCalculateAdapter extends ArrayAdapter {
         LayoutHandler layoutHandler;
         if (row==null) {
             LayoutInflater layoutInflater = (LayoutInflater)this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert layoutInflater != null;
             row = layoutInflater.inflate(R.layout.row_calculate,parent,false);
             layoutHandler = new LayoutHandler();
-            layoutHandler.NUMBER= (TextView) row.findViewById(R.id.number);
-            layoutHandler.FINISH= (TextView) row.findViewById(R.id.finish);
-            layoutHandler.REMAINED = (TextView) row.findViewById(R.id.remainTime);
-            layoutHandler.TARIFF = (TextView) row.findViewById(R.id.tariff);
+            layoutHandler.NUMBER = row.findViewById(R.id.number);
+            layoutHandler.FINISH = row.findViewById(R.id.finish);
+            layoutHandler.REMAINED = row.findViewById(R.id.remainTime);
+            layoutHandler.TARIFF = row.findViewById(R.id.tariff);
             row.setTag(layoutHandler);
         } else {
-            //TODO bunu burdan cikar ne ise yaradigini test et
+            //TODO test
             layoutHandler = (LayoutHandler) row.getTag();
         }
-        DataProvider dataProvider = (DataProvider) this.getItem(position);  //Anlamiyorum
+        DataProvider dataProvider = (DataProvider) this.getItem(position);  //Test this
         layoutHandler.NUMBER.setText(dataProvider.getNumberPeriod());
         layoutHandler.FINISH.setText(dataProvider.getFinish());
         int remainTime = dataProvider.getRemainTime();

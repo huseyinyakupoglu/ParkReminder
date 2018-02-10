@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class ListDataAdapter extends ArrayAdapter {
-    List list = new ArrayList();
+    private List list = new ArrayList();
     public ListDataAdapter(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
     }
@@ -50,7 +50,9 @@ public class ListDataAdapter extends ArrayAdapter {
         LayoutHandler layoutHandler;
         if (row==null) {
             LayoutInflater layoutInflater = (LayoutInflater)this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = layoutInflater.inflate(R.layout.row_layout,parent,false);
+            if (layoutInflater != null) {
+                row = layoutInflater.inflate(R.layout.row_layout,parent,false);
+            }
             layoutHandler = new LayoutHandler();
             layoutHandler.NAME =  row.findViewById(R.id.park_name);
             layoutHandler.PERIOD = row.findViewById(R.id.period);
@@ -59,7 +61,7 @@ public class ListDataAdapter extends ArrayAdapter {
         } else {
             layoutHandler = (LayoutHandler) row.getTag();
                     }
-        DataProvider dataProvider = (DataProvider) this.getItem(position);  //Anlamiyorum Bu gereklimi
+        DataProvider dataProvider = (DataProvider) this.getItem(position);  //Test this one
         layoutHandler.NAME.setText(dataProvider.getParkingname());
         layoutHandler.PERIOD.setText(dataProvider.getPeriod());
         layoutHandler.TARIFF.setText(dataProvider.getTariff());

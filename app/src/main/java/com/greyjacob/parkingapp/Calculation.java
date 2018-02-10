@@ -111,6 +111,7 @@ public class Calculation extends AppCompatActivity {
 
         // liste nin devam eden periyodu ekrana basildi
         populateListView(String.valueOf(periodCount), finishTime, remainTime, String.format("%.2f", tariffPeriodic), creationTime, period);
+        sendDataBroadcastReceiver();
         startAlarm();
     }
 
@@ -367,7 +368,10 @@ public class Calculation extends AppCompatActivity {
         int remainMiliSecPeriod= calendar.get(Calendar.MILLISECOND);
         int waitTime = (remainMinPeriod*60*1000) - (remainSecondPeriod*1000 + remainMiliSecPeriod);
         Log.d(ALARM, "wait time: " + waitTime);
+
         Intent intent = new Intent(this, AlarmNotificationReceiver.class);
+
+
         alarmIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+waitTime,period*60*1000, alarmIntent);
@@ -376,6 +380,16 @@ public class Calculation extends AppCompatActivity {
 
     public void cancelAlarm(){
        alarmManager.cancel(alarmIntent);
+    }
+
+
+    public void sendDataBroadcastReceiver(){
+        Intent intent = new Intent(this, AlarmNotificationReceiver.class);
+//        Intent intent = new Intent("DataAction");
+        intent.setAction("DataAction");
+        intent.putExtra("periodCount", periodCount);
+        intent.putExtra("tariff", tariff);
+        sendBroadcast(intent);
     }
 
     public int timeInMinute (){
